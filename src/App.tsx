@@ -1,13 +1,9 @@
 import React from "react";
 import "./App.css";
-import { Home } from "./pages/home/Header";
+import { Rotas } from "./routes";
 
 function App() {
-  return (
-    <>
-      <Home />
-    </>
-  );
+  return <Rotas></Rotas>;
 }
 
 export default App;

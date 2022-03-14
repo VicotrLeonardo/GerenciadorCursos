@@ -1,19 +1,32 @@
 import styled from "styled-components";
 
+export const Container = styled.div`
+  width: 20%;
+  margin-bottom: 1rem;
+  justify-content: center;
+  display: flex;
+`;
+
 export const Cartao = styled.div`
-  display: flex
   justify-content: center
   align-items: center;
-  background-color: blue;
-  padding: 1em;
-
+  background-color: #AEAEB3;
+  padding:0.5rem;
+  border: 2px solid #fff9 ;
+  border-radius: 10px;
+  &:hover {
+    background-color: lightblue;
+  }
+  
 `;
 export const Id = styled.h3`
   align-self: center;
 `;
-export const Titulo = styled.h1``;
-export const Descricao = styled.textarea`
-  padding: 1em;
-  font-weight: 600;
+export const Titulo = styled.h3`
   font-size: 1rem;
+`;
+export const Descricao = styled.textarea`
+  font-weight: 200;
+  font-size: 1rem;
+  resize: none;
 `;

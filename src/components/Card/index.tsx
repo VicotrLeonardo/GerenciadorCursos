@@ -1,13 +1,35 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-import { Cartao, Id, Titulo, Descricao } from "./style";
+import { Container, Cartao, Id, Titulo, Descricao } from "./style";
 
-export function Card() {
+interface CardProps {
+  id: number;
+  titulo: string;
+  descricao: string;
+}
+
+interface dataProps {
+  data: CardProps;
+}
+
+export function Card({ id, titulo, descricao }: CardProps) {
+  const navigate = useNavigate();
+
+  const data = { id, titulo, descricao };
+
+  function handleClickAlterar() {
+    navigate("/alterar");
+  }
   return (
-    <Cartao>
-      <Id>123</Id>
-      <Titulo>Curso Teste 1</Titulo>
-      <Descricao></Descricao>
-    </Cartao>
+    <>
+      <Container onClick={handleClickAlterar}>
+        <Cartao>
+          <Id>{id}</Id>
+          <Titulo>{titulo}</Titulo>
+          <Descricao disabled>{descricao}</Descricao>
+        </Cartao>
+      </Container>
+    </>
   );
 }
