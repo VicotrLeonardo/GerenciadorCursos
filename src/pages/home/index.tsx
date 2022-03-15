@@ -13,6 +13,7 @@ import {
   TextH1,
   Container,
   Div,
+  Link,
 } from "./styles";
 
 export function Home() {
@@ -23,13 +24,28 @@ export function Home() {
     navigate("/adicionar");
   }
 
+  api
+    .get("/cursos")
+    .then((response) => setCards(response.data))
+    .catch((error) => {
+      console.error("ops!! ocorreu um erro " + error);
+    });
+
   useEffect(() => {
-    api
-      .get("/cursos")
-      .then((response) => setCards(response.data))
-      .catch((error) => {
-        console.error("ops!! ocorreu um erro " + error);
-      });
+    async function teste() {
+      await api
+        .get("/cursos")
+        .then((response) => setCards(response.data))
+        .catch((error) => {
+          console.error("ops!! ocorreu um erro " + error);
+        });
+    }
+
+    try {
+      teste();
+    } catch (error) {
+      console.log(`Codigo do Erro: ${error}`);
+    }
   }, []);
 
   return (
@@ -46,11 +62,18 @@ export function Home() {
           <Div>
             {cards.map((card) => {
               return (
-                <Card
-                  id={card.id}
-                  titulo={card.titulo}
-                  descricao={card.descricao}
-                />
+                <Link
+                  style={{ textDecoration: "none" }}
+                  key={card.id}
+                  to={`/alterar/${card.id}`}
+                >
+                  <Card
+                    id={card.id}
+                    titulo={card.titulo}
+                    descricao={card.descricao}
+                    onClick={() => navigate("/alterar", { state: card.id })}
+                  />
+                </Link>
               );
             })}
           </Div>

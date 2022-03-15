@@ -11,7 +11,7 @@ export function Rotas() {
       <Routes>
         <Route element={<Home />} path="/" />
         <Route element={<Adicionar />} path="/adicionar" />
-        <Route element={<Alterar />} path="/alterar" />
+        <Route element={<Alterar />} path="/alterar/:id" />
       </Routes>
     </BrowserRouter>
   );

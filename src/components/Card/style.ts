@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  width: 20%;
   margin-bottom: 1rem;
   justify-content: center;
   display: flex;
+  margin-right: 1rem;
 `;
 
 export const Cartao = styled.div`

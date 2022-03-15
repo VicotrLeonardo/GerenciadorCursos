@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 export const Header = styled.div`
@@ -60,11 +61,13 @@ export const Container = styled.div`
 
 export const Div = styled.div`
   display: flex;
-  align-items: flex-start;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: flex-start;
-  align-content: flex-start;
   text-align: center;
   margin-top: 1rem;
+  justify-content: center;
+`;
+
+export const Link = styled(NavLink)`
+  display: flex;
 `;

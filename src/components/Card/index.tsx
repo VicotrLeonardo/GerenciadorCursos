@@ -1,5 +1,4 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
 import { Container, Cartao, Id, Titulo, Descricao } from "./style";
 
@@ -7,23 +6,13 @@ interface CardProps {
   id: number;
   titulo: string;
   descricao: string;
+  onClick: (data: any) => void;
 }
 
-interface dataProps {
-  data: CardProps;
-}
-
-export function Card({ id, titulo, descricao }: CardProps) {
-  const navigate = useNavigate();
-
-  const data = { id, titulo, descricao };
-
-  function handleClickAlterar() {
-    navigate("/alterar");
-  }
+export function Card({ id, titulo, descricao, onClick }: CardProps) {
   return (
     <>
-      <Container onClick={handleClickAlterar}>
+      <Container onClick={onClick}>
         <Cartao>
           <Id>{id}</Id>
           <Titulo>{titulo}</Titulo>
