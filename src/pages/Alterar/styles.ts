@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+interface buttonFunProps {
+  fun: string;
+}
+
 export const Header = styled.div`
   display: flex;
   background-color: #29292e;
@@ -69,19 +73,20 @@ export const InputDescricao = styled.textarea`
   border-radius: 3px;
 `;
 
-export const ButtonAdicionar = styled.button`
+export const ButtonFun = styled.button<buttonFunProps>`
   margin-top: 0.5rem;
   height: 5vh;
   width: 5vw;
-  align-self: center;
   padding: 5px;
   font-size: 12px;
   font-weight: 600;
   border-radius: 10px;
   transition: 0.5s;
   &:hover {
-    background-color: lightblue;
+    opacity: 0.7;
   }
+  background-color: ${(props) =>
+    props.fun === "Alterar" ? "	#98FB98" : "#FF6347"};
 `;
 
 export const ButtonBack = styled.button`
@@ -92,4 +97,12 @@ export const ButtonBack = styled.button`
   &:hover {
     background-color: lightblue;
   }
+`;
+
+export const DivButton = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-self: center;
+  width: 190px;
+  justify-content: space-between;
 `;

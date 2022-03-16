@@ -6,7 +6,7 @@ import { ImHome } from "react-icons/im";
 import {
   Header,
   Text,
-  ButtonAdicionar,
+  ButtonFun,
   Cabecalho,
   Container,
   Sessao,
@@ -16,13 +16,15 @@ import {
   Input,
   InputDescricao,
   ButtonBack,
+  DivButton,
 } from "./styles";
 import { CardsProps } from "../../dtos/CardDTO";
+import { ModalExcluir } from "../../components/ModalExcluir";
 
 export function Alterar() {
   const [titulo, setTitulo] = useState("");
   const [descricao, setDescricao] = useState("");
-
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const [dados, setDados] = useState<CardsProps>(Object);
 
   const navigate = useNavigate();
@@ -119,11 +121,25 @@ export function Alterar() {
                 value={descricao ? descricao : ""}
               ></InputDescricao>
             </Div>
-
-            <ButtonAdicionar>Alterar</ButtonAdicionar>
+            <DivButton>
+              <ButtonFun type="submit" fun="Alterar">
+                Alterar
+              </ButtonFun>
+              <ButtonFun
+                type="button"
+                fun="Excluir"
+                onClick={() => setIsModalVisible(true)}
+              >
+                Excluir
+              </ButtonFun>
+            </DivButton>
           </Formulario>
         </Sessao>
       </Container>
+
+      {isModalVisible && (
+        <ModalExcluir close={setIsModalVisible} id={Number(id)} />
+      )}
     </>
   );
 }
