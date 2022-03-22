@@ -16,17 +16,23 @@ import {
 
 interface Props {
   close: any;
-  id: any;
+  id: string;
+  titulo: string;
 }
 
-export function ModalExcluir({ close, id }: Props) {
+export function ModalExcluir({ close, id, titulo }: Props) {
   const navigate = useNavigate();
 
   function handleClickExcluir() {
     try {
-      api.delete(`/cursos/${id}`).then(() => {
-        navigate("/");
-      });
+      api
+        .delete(`/topicos/${id}`)
+        .then(() => {
+          navigate("/");
+        })
+        .catch((error) => {
+          alert("Ocorreu um erro ao Excluir o Topico: " + error.message);
+        });
     } catch (error) {
       console.log(error);
     }
@@ -39,7 +45,7 @@ export function ModalExcluir({ close, id }: Props) {
           <TextHeader>Exclusão</TextHeader>
         </Header>
         <Body>
-          <TextBody>Deseja Remover a Tarefa {id} ? </TextBody>
+          <TextBody>Deseja Remover o Topico {titulo} ? </TextBody>
           <DivButton>
             <Button fun="Cancelar" onClick={() => close(false)}>
               <TextButton>Cancelar</TextButton>

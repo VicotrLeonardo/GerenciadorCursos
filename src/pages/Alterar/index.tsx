@@ -18,32 +18,29 @@ import {
   ButtonBack,
   DivButton,
 } from "./styles";
-import { CardsProps } from "../../dtos/CardDTO";
+import { TopicoDTO } from "../../dtos/CardDTO";
 import { ModalExcluir } from "../../components/ModalExcluir";
 
 export function Alterar() {
   const [titulo, setTitulo] = useState("");
-  const [descricao, setDescricao] = useState("");
+  const [mensagem, setMensagem] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [dados, setDados] = useState<CardsProps>(Object);
 
   const navigate = useNavigate();
 
   const params = useParams();
-  const id = params.id;
+  const id = String(params.id);
 
   useEffect(() => {
     async function getTarefa() {
       await api
-        .get(`/cursos/${id}`)
+        .get(`/topicos/${id}`)
         .then((response) => {
-          setTitulo(response.data.titulo);
-          setDescricao(response.data.descricao);
-          setDados(response.data);
+          setTitulo(response.data.ds_topico);
+          setMensagem(response.data.ds_mensagem);
         })
-
         .catch((error) => {
-          console.error("ops!! ocorreu um erro " + error);
+          alert("Ocorreu um erro ao buscar o Topico: " + error.message);
         });
     }
 
@@ -55,10 +52,17 @@ export function Alterar() {
   }, []);
 
   async function apiPut() {
-    await api.put(`/cursos/${id}`, {
-      titulo: titulo,
-      descricao: descricao,
-    });
+    await api
+      .put(`/topicos/${id}`, {
+        id: id,
+        ds_topico: titulo,
+        ds_mensagem: mensagem,
+        nm_usuario: "Victor Leonardo",
+      })
+      .then(() => navigate("/"))
+      .catch((error) => {
+        alert("Ocorreu um erro ao Atualizar o Topico: " + error.message);
+      });
   }
 
   function handleClickHome() {
@@ -69,7 +73,7 @@ export function Alterar() {
     <>
       <Header>
         <Cabecalho>
-          <Text>Alterar Tarefa</Text>
+          <Text>Alterar Topico</Text>
         </Cabecalho>
         <ButtonBack onClick={handleClickHome}>
           <ImHome size={20} />
@@ -81,13 +85,11 @@ export function Alterar() {
             onSubmit={(event) => {
               event.preventDefault();
 
-              if (titulo && descricao) {
+              if (titulo && mensagem) {
                 try {
                   apiPut();
                 } catch (erro) {
                   console.log(`Codigo do Erro: ${erro}`);
-                } finally {
-                  navigate("/");
                 }
               } else {
                 alert("Preencha Todos os Campos!");
@@ -98,9 +100,9 @@ export function Alterar() {
               <TextH3>ID</TextH3>
               <Input
                 disabled
-                type="number"
+                type="string"
                 className="id"
-                value={dados.id ? dados.id : ""}
+                value={id ? id : ""}
               ></Input>
             </Div>
 
@@ -117,8 +119,8 @@ export function Alterar() {
               <TextH3>Descrição</TextH3>
               <InputDescricao
                 className="descricao"
-                onChange={(e) => setDescricao(e.target.value)}
-                value={descricao ? descricao : ""}
+                onChange={(e) => setMensagem(e.target.value)}
+                value={mensagem ? mensagem : ""}
               ></InputDescricao>
             </Div>
             <DivButton>
@@ -138,7 +140,7 @@ export function Alterar() {
       </Container>
 
       {isModalVisible && (
-        <ModalExcluir close={setIsModalVisible} id={Number(id)} />
+        <ModalExcluir close={setIsModalVisible} id={id} titulo={titulo} />
       )}
     </>
   );

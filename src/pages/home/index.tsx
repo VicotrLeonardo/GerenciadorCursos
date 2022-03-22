@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card } from "../../components/Card";
-import { CardsProps } from "../../dtos/CardDTO";
+import { CardsProps, TopicoDTO } from "../../dtos/CardDTO";
 import api from "../../services/api";
 
 import {
@@ -17,32 +17,25 @@ import {
 } from "./styles";
 
 export function Home() {
-  const [cards, setCards] = useState<CardsProps[]>([]);
+  const [topicos, setTopicos] = useState<TopicoDTO[]>([]);
   const navigate = useNavigate();
 
   function handleClickAdd() {
     navigate("/adicionar");
   }
 
-  api
-    .get("/cursos")
-    .then((response) => setCards(response.data))
-    .catch((error) => {
-      console.error("ops!! ocorreu um erro " + error);
-    });
-
   useEffect(() => {
-    async function teste() {
+    async function getTopicos() {
       await api
-        .get("/cursos")
-        .then((response) => setCards(response.data))
+        .get("/topicos")
+        .then((response) => setTopicos(response.data))
         .catch((error) => {
-          console.error("ops!! ocorreu um erro " + error);
+          alert(`Ocorreu um erro ao buscar os Topicos ${error.message}`);
         });
     }
 
     try {
-      teste();
+      getTopicos();
     } catch (error) {
       console.log(`Codigo do Erro: ${error}`);
     }
@@ -52,26 +45,27 @@ export function Home() {
     <>
       <Header>
         <Cabecalho>
-          <Text>GERENCIADOR DE TAREFAS</Text>
+          <Text>TÓPICOS</Text>
           <ButtonAdicionar onClick={handleClickAdd}>ADICIONAR</ButtonAdicionar>
         </Cabecalho>
       </Header>
       <Container>
-        <TextH1>LISTA DE TAREFAS</TextH1>
+        <TextH1>ULTIMAS POSTAGENS</TextH1>
         <Sessao>
           <Div>
-            {cards.map((card) => {
+            {topicos.map((topico) => {
               return (
                 <Link
                   style={{ textDecoration: "none" }}
-                  key={card.id}
-                  to={`/alterar/${card.id}`}
+                  key={String(topico.id)}
+                  to={`/alterar/${topico.id}`}
                 >
                   <Card
-                    id={card.id}
-                    titulo={card.titulo}
-                    descricao={card.descricao}
-                    onClick={() => navigate("/alterar", { state: card.id })}
+                    id={topico.id}
+                    ds_topico={topico.ds_topico}
+                    ds_mensagem={topico.ds_mensagem}
+                    nm_usuario={topico.nm_usuario}
+                    onClick={() => navigate("/alterar", { state: topico.id })}
                   />
                 </Link>
               );

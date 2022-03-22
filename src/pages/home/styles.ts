@@ -38,8 +38,7 @@ export const Cabecalho = styled.div`
 export const Sessao = styled.div`
   margin: 0 auto;
   width: 90vw;
-  border: 2px solid;
-  border-radius: 10px;
+  border-top: 2px solid;
   height: 80%;
 `;
 
@@ -56,7 +55,7 @@ export const Container = styled.div`
   position: absolute;
   width: 100vw;
   background-color: #47474d;
-  height: 90vh;
+  height: 100%;
 `;
 
 export const Div = styled.div`
