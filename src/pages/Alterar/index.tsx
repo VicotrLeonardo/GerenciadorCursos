@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import api from "../../services/api";
 import { ImHome } from "react-icons/im";
+
+import { useForm, Controller } from "react-hook-form";
 
 import {
   Header,
@@ -17,27 +19,34 @@ import {
   InputDescricao,
   ButtonBack,
   DivButton,
+  Error,
 } from "./styles";
-import { TopicoDTO } from "../../dtos/CardDTO";
+
 import { ModalExcluir } from "../../components/ModalExcluir";
+import { TopicoDTO } from "../../dtos/CardDTO";
 
 export function Alterar() {
-  const [titulo, setTitulo] = useState("");
-  const [mensagem, setMensagem] = useState("");
+  const [ds_mensagem, setDs_mensagem] = useState<TopicoDTO["ds_mensagem"]>("");
+  const [ds_topico, setDs_topico] = useState<TopicoDTO["ds_topico"]>("");
+  const [topico, setTopico] = useState<TopicoDTO>();
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const navigate = useNavigate();
 
   const params = useParams();
+
   const id = String(params.id);
+
+  // console.log(id);
 
   useEffect(() => {
     async function getTarefa() {
       await api
         .get(`/topicos/${id}`)
         .then((response) => {
-          setTitulo(response.data.ds_topico);
-          setMensagem(response.data.ds_mensagem);
+          setDs_topico(response.data.ds_topico);
+          setDs_mensagem(response.data.ds_mensagem);
+          setTopico(response.data);
         })
         .catch((error) => {
           alert("Ocorreu um erro ao buscar o Topico: " + error.message);
@@ -51,17 +60,25 @@ export function Alterar() {
     }
   }, []);
 
-  async function apiPut() {
+  const {
+    control,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ defaultValues: topico });
+
+  async function apiPut({ ds_topico, ds_mensagem }: any) {
     await api
       .put(`/topicos/${id}`, {
         id: id,
-        ds_topico: titulo,
-        ds_mensagem: mensagem,
+        ds_topico: ds_topico,
+        ds_mensagem: ds_mensagem,
         nm_usuario: "Victor Leonardo",
       })
       .then(() => navigate("/"))
       .catch((error) => {
         alert("Ocorreu um erro ao Atualizar o Topico: " + error.message);
+        navigate("/");
       });
   }
 
@@ -81,21 +98,7 @@ export function Alterar() {
       </Header>
       <Container>
         <Sessao>
-          <Formulario
-            onSubmit={(event) => {
-              event.preventDefault();
-
-              if (titulo && mensagem) {
-                try {
-                  apiPut();
-                } catch (erro) {
-                  console.log(`Codigo do Erro: ${erro}`);
-                }
-              } else {
-                alert("Preencha Todos os Campos!");
-              }
-            }}
-          >
+          <Formulario onSubmit={handleSubmit(apiPut)}>
             <Div>
               <TextH3>ID</TextH3>
               <Input
@@ -107,32 +110,35 @@ export function Alterar() {
             </Div>
 
             <Div>
-              <TextH3>Título da Tarefa</TextH3>
-              <Input
-                className="titulo"
-                onChange={(e) => setTitulo(e.target.value)}
-                value={titulo ? titulo : ""}
-              ></Input>
+              <TextH3>Título do Topico</TextH3>
+
+              <Controller
+                name="ds_topico"
+                control={control}
+                render={({ field: { value } }) => (
+                  <Input
+                    className="ds_topico"
+                    placeholder={ds_topico && ds_topico.toString()}
+                    {...register("ds_topico", { required: true })}
+                  ></Input>
+                )}
+              />
+
+              {errors.ds_topico && <Error>O Titulo é obrigatório</Error>}
             </Div>
 
             <Div>
-              <TextH3>Descrição</TextH3>
+              <TextH3>Mensagem</TextH3>
               <InputDescricao
-                className="descricao"
-                onChange={(e) => setMensagem(e.target.value)}
-                value={mensagem ? mensagem : ""}
+                className="ds_mensagem"
+                placeholder={ds_mensagem && ds_mensagem.toString()}
+                {...register("ds_mensagem", { required: true })}
               ></InputDescricao>
+              {errors.ds_mensagem && <Error>A Mensagem é obrigatória</Error>}
             </Div>
             <DivButton>
               <ButtonFun type="submit" fun="Alterar">
-                Alterar
-              </ButtonFun>
-              <ButtonFun
-                type="button"
-                fun="Excluir"
-                onClick={() => setIsModalVisible(true)}
-              >
-                Excluir
+                POSTAR
               </ButtonFun>
             </DivButton>
           </Formulario>
@@ -140,7 +146,7 @@ export function Alterar() {
       </Container>
 
       {isModalVisible && (
-        <ModalExcluir close={setIsModalVisible} id={id} titulo={titulo} />
+        <ModalExcluir close={setIsModalVisible} id={id} titulo={ds_topico} />
       )}
     </>
   );

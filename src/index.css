@@ -10,6 +10,12 @@ body {
   background: no-repeat;
   background-color: #47474d;
   background-size: cover;
+
+  margin:0;
+  padding: 0;
+  box-sizing: border-box;
+
+
 }
 
 code {

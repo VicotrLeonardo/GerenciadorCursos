@@ -17,7 +17,7 @@ import {
 interface Props {
   close: any;
   id: string;
-  titulo: string;
+  titulo: any;
 }
 
 export function ModalExcluir({ close, id, titulo }: Props) {

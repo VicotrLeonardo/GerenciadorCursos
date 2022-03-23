@@ -104,5 +104,10 @@ export const DivButton = styled.div`
   flex-direction: row;
   align-self: center;
   width: 190px;
-  justify-content: space-between;
+  justify-content: center;
+`;
+
+export const Error = styled.p`
+  font-size: 12px;
+  color: red;
 `;

@@ -1,4 +1,9 @@
 import styled from "styled-components";
+import { NavLink } from "react-router-dom";
+
+interface buttonFunProps {
+  fun: string;
+}
 
 export const Header = styled.div`
   display: flex;
@@ -69,22 +74,22 @@ export const InputDescricao = styled.textarea`
   border-radius: 3px;
 `;
 
-export const ButtonAdicionar = styled.button`
+export const ButtonFun = styled.button<buttonFunProps>`
   margin-top: 0.5rem;
+
   height: 5vh;
-
-  align-self: center;
-
   width: 5vw;
   padding: 5px;
   font-size: 12px;
   font-weight: 600;
   border-radius: 10px;
   transition: 0.5s;
+
   &:hover {
     opacity: 0.7;
   }
-  background-color: #98fb98;
+  background-color: ${(props) =>
+    props.fun === "Alterar" ? "	#98FB98" : "#FF6347"};
 `;
 
 export const ButtonBack = styled.button`
@@ -97,7 +102,35 @@ export const ButtonBack = styled.button`
   }
 `;
 
-export const Error = styled.p`
+export const DivButton = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-self: center;
+  width: 210px;
+  justify-content: space-between;
+`;
+
+export const Link = styled(NavLink)`
+  display: flex;
+`;
+
+export const Nome = styled.h3`
   font-size: 12px;
-  color: red;
+  margin-left: 10px;
+  color: #fff;
+`;
+
+export const IconDiv = styled.div`
+  display: flex;
+  width: 45px;
+  height: 41px;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff9;
+  border-radius: 30px;
+`;
+
+export const HeaderIcon = styled.div`
+  display: flex;
+  flex-direction: row;
 `;

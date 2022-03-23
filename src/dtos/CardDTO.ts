@@ -1,5 +1,3 @@
-import { v4 as uuidv4 } from "uuid";
-
 export interface CardsProps {
   id: number;
   titulo: string;
@@ -7,7 +5,7 @@ export interface CardsProps {
 }
 
 export interface TopicoDTO {
-  id: typeof uuidv4;
+  id: string;
   ds_topico: string;
   ds_mensagem: string;
   nm_usuario: string;

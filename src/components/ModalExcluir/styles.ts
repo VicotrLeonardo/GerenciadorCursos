@@ -55,6 +55,7 @@ export const Button = styled.div<buttonFunProps>`
   align-items: center;
   justify-content: center;
   display: flex;
+  margin-right: 10px;
 
   &:hover {
     opacity: 0.7;

@@ -58,14 +58,16 @@ export function Home() {
                 <Link
                   style={{ textDecoration: "none" }}
                   key={String(topico.id)}
-                  to={`/alterar/${topico.id}`}
+                  to={`/topicopage/${topico.id}`}
                 >
                   <Card
                     id={topico.id}
                     ds_topico={topico.ds_topico}
                     ds_mensagem={topico.ds_mensagem}
                     nm_usuario={topico.nm_usuario}
-                    onClick={() => navigate("/alterar", { state: topico.id })}
+                    onClick={() =>
+                      navigate("/topicopage", { state: topico.id })
+                    }
                   />
                 </Link>
               );

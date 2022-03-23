@@ -5,6 +5,8 @@ import { ImHome } from "react-icons/im";
 
 import { v4 as uuidv4 } from "uuid";
 
+import { useForm } from "react-hook-form";
+
 import {
   Header,
   Text,
@@ -18,19 +20,31 @@ import {
   Input,
   InputDescricao,
   ButtonBack,
+  Error,
 } from "./style";
 
+interface Form {
+  ds_topico: any;
+  ds_mensagem: any;
+}
+
+import { TopicoDTO } from "../../dtos/CardDTO";
+
 export function Adicionar() {
-  const [titulo, setTitulo] = useState("");
-  const [mensagem, setMensagem] = useState("");
   const navigate = useNavigate();
   const id = uuidv4();
 
-  async function apiPost() {
-    const novoTopico = {
-      id: id,
-      ds_topico: titulo,
-      ds_mensagem: mensagem,
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  async function apiPost({ ds_topico, ds_mensagem }: any) {
+    const novoTopico: TopicoDTO = {
+      id: uuidv4(),
+      ds_topico: ds_topico,
+      ds_mensagem: ds_mensagem,
       nm_usuario: "Victor Leonardo",
     };
 
@@ -39,6 +53,7 @@ export function Adicionar() {
       .then(() => navigate("/"))
       .catch((error) => {
         alert("Ocorreu um erro ao Adicionar o Topico: " + error.message);
+        navigate("/");
       });
   }
 
@@ -50,7 +65,7 @@ export function Adicionar() {
     <>
       <Header>
         <Cabecalho>
-          <Text>Nova Topico</Text>
+          <Text>Novo Tópico</Text>
         </Cabecalho>
         <ButtonBack onClick={handleClickHome}>
           <ImHome size={20} />
@@ -58,21 +73,7 @@ export function Adicionar() {
       </Header>
       <Container>
         <Sessao>
-          <Formulario
-            onSubmit={(event) => {
-              event.preventDefault();
-
-              if (titulo && mensagem) {
-                try {
-                  apiPost();
-                } catch (erro) {
-                  console.log(`Codigo do Erro: ${erro}`);
-                }
-              } else {
-                alert("Preencha Todos os Campos!");
-              }
-            }}
-          >
+          <Formulario onSubmit={handleSubmit(apiPost)}>
             <Div>
               <TextH3>ID</TextH3>
               <Input disabled type="string" className="id" value={id}></Input>
@@ -82,16 +83,18 @@ export function Adicionar() {
               <TextH3>Titulo do Tópico</TextH3>
               <Input
                 className="titulo"
-                onChange={(e) => setTitulo(e.target.value)}
+                {...register("ds_topico", { required: true })}
               ></Input>
+              {errors.ds_topico && <Error>O Titulo é obrigatório</Error>}
             </Div>
 
             <Div>
               <TextH3>Mensagem</TextH3>
               <InputDescricao
                 className="descricao"
-                onChange={(e) => setMensagem(e.target.value)}
+                {...register("ds_mensagem", { required: true })}
               ></InputDescricao>
+              {errors.ds_mensagem && <Error>A mensagem é obrigatória</Error>}
             </Div>
 
             <ButtonAdicionar>POSTAR</ButtonAdicionar>
