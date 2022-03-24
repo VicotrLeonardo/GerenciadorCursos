@@ -37,7 +37,7 @@ export function Card({
             <Id>{ds_topico}</Id>
           </Content>
 
-          <Descricao disabled>{ds_mensagem}</Descricao>
+          <Descricao disabled>{ds_mensagem.substring(0, 20)}</Descricao>
         </Cartao>
       </Container>
     </>

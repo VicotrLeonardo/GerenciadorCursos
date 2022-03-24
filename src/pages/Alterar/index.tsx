@@ -93,7 +93,7 @@ export function Alterar() {
           <Text>Alterar Topico</Text>
         </Cabecalho>
         <ButtonBack onClick={handleClickHome}>
-          <ImHome size={20} />
+          <ImHome size={40} color={"#fff"} />
         </ButtonBack>
       </Header>
       <Container>
@@ -118,7 +118,7 @@ export function Alterar() {
                 render={({ field: { value } }) => (
                   <Input
                     className="ds_topico"
-                    placeholder={ds_topico && ds_topico.toString()}
+                    defaultValue={ds_topico && ds_topico.toString()}
                     {...register("ds_topico", { required: true })}
                   ></Input>
                 )}
@@ -131,7 +131,7 @@ export function Alterar() {
               <TextH3>Mensagem</TextH3>
               <InputDescricao
                 className="ds_mensagem"
-                placeholder={ds_mensagem && ds_mensagem.toString()}
+                defaultValue={ds_mensagem && ds_mensagem.toString()}
                 {...register("ds_mensagem", { required: true })}
               ></InputDescricao>
               {errors.ds_mensagem && <Error>A Mensagem é obrigatória</Error>}

@@ -68,7 +68,7 @@ export function Adicionar() {
           <Text>Novo Tópico</Text>
         </Cabecalho>
         <ButtonBack onClick={handleClickHome}>
-          <ImHome size={20} />
+          <ImHome size={40} color={"#fff"} />
         </ButtonBack>
       </Header>
       <Container>

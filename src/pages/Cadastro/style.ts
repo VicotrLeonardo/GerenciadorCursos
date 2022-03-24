@@ -87,10 +87,8 @@ export const ButtonAdicionar = styled.button`
   background-color: #98fb98;
 `;
 
-export const ButtonBack = styled.button`
+export const ButtonBack = styled.div`
   align-self: center;
-  height: 5vh;
-  width: 3vw;
   border-radius: 10px;
   &:hover {
     background-color: lightblue;

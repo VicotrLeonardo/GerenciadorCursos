@@ -26,6 +26,7 @@ export const Container = styled.div`
   height: 250px;
   align-items: center;
   border-radius: 30px;
+  padding: 5px;
 `;
 
 export const Header = styled.div`
@@ -35,7 +36,14 @@ export const Header = styled.div`
   justify-content: center;
 `;
 export const TextHeader = styled.h1``;
-export const Body = styled.div``;
+export const Body = styled.div`
+  display: flex;
+
+  height: 200px;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-around;
+`;
 export const TextBody = styled.h3``;
 export const DivButton = styled.div`
   display: flex;

@@ -14,16 +14,13 @@ import {
   Formulario,
   Div,
   TextH3,
-  Input,
   InputDescricao,
   ButtonBack,
   DivButton,
-  Link,
   HeaderIcon,
   IconDiv,
   Nome,
 } from "./styles";
-import { TopicoDTO } from "../../dtos/CardDTO";
 import { ModalExcluir } from "../../components/ModalExcluir";
 
 export function TopicoPage() {
@@ -47,18 +44,14 @@ export function TopicoPage() {
           setTitulo(response.data.ds_topico);
           setMensagem(response.data.ds_mensagem);
           setNm_usuario(response.data.nm_usuario);
+          console.log(response);
         })
         .catch((error) => {
           alert("Ocorreu um erro ao buscar o Topico: " + error.message);
           navigate("/");
         });
     }
-
-    try {
-      getTarefa();
-    } catch (error) {
-      console.log(`Codigo do Erro: ${error}`);
-    }
+    getTarefa();
   }, []);
 
   function handleClickHome() {
@@ -72,7 +65,7 @@ export function TopicoPage() {
           <Text>{`Topico ${titulo}`}</Text>
         </Cabecalho>
         <ButtonBack onClick={handleClickHome}>
-          <ImHome size={20} />
+          <ImHome size={40} color={"#fff"} />
         </ButtonBack>
       </Header>
       <Container>

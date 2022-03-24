@@ -1,9 +1,15 @@
 import React from "react";
-import "./App.css";
+
 import { Rotas } from "./routes";
+import { GlobalStyle } from "./styles/globalStyle";
 
 function App() {
-  return <Rotas></Rotas>;
+  return (
+    <>
+      <GlobalStyle />
+      <Rotas></Rotas>
+    </>
+  );
 }
 
 export default App;
